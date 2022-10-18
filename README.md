@@ -26,7 +26,7 @@ import {WalletProvider} from "@mysten/wallet-adapter-react";
 import {GlassWalletAdapter} from "@glass-wallet/glass-wallet-adapter";
 import GlassIcon from "@glass-wallet/glass-wallet-adapter/assets/logo.svg";
 import GlassRoundIcon from "@glass-wallet/glass-wallet-adapter/assets/logo-round.svg";
-import GlassMarkIcon from "glass-wallet-adapter/logo-mark.svg"
+import GlassMarkIcon from "@glass-wallet/glass-wallet-adapter/assets/logo-mark.svg"
 
 const supportedWallets = [
   {adapter: new GlassWalletAdapter()},
