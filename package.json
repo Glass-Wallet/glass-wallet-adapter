@@ -1,16 +1,16 @@
 {
   "name": "@glass-wallet/glass-wallet-adapter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Integration of Glass Wallet Wallet into the Sui Wallet Adapter",
   "license": "MIT",
   "author": "Mikenervermind <mike@glasswallet.app>",
-  "main": "dist/index.cjs",
+  "main": "src/index.cjs",
   "module": "dist/index.js",
   "browser": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "assets/*"
+    "assets"
   ],
   "scripts": {
     "dev": "rollup -c rollup.config.ts --watch",
