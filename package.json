@@ -1,5 +1,5 @@
 {
-  "name": "@glass-wallet/wallet-adapter",
+  "name": "@glass-wallet/glass-wallet-adapter",
   "version": "0.0.1",
   "description": "Integration of Glass Wallet Wallet into the Sui Wallet Adapter",
   "license": "MIT",
