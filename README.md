@@ -7,39 +7,85 @@
 ## Integrate your DApp with Glass Wallet.
 
 With this adapter, your DApp can easily connect with the Glass Wallet.
+Demo: https://glass-wallet-integrate-demo.vercel.app/
 
 ## 🚀 Get Started
 ### Installation
 
-1. A React project
-2. Install required npm packages
-
 ```bash
-npm install @mysten/wallet-adapter-react @glass-wallet/glass-wallet-adapter
+npm install @glass-wallet/glass-wallet-adapter
+# or
+yarn add install @glass-wallet/glass-wallet-adapter
 ```
 
 ### Setup
 
+#### With WalletStandardAdapterProvider
 ```jsx
-// main.js
-import {WalletProvider} from "@mysten/wallet-adapter-react";
-import {GlassWalletAdapter} from "@glass-wallet/glass-wallet-adapter";
-import GlassIcon from "@glass-wallet/glass-wallet-adapter/assets/logo.svg";
-import GlassRoundIcon from "@glass-wallet/glass-wallet-adapter/assets/logo-round.svg";
-import GlassMarkIcon from "@glass-wallet/glass-wallet-adapter/assets/logo-mark.svg"
+// App.js
+import "./App.css";
+import { useMemo } from "react";
+import { WalletProvider } from "@mysten/wallet-adapter-react";
+import { WalletStandardAdapterProvider } from "@mysten/wallet-adapter-all-wallets";
+import MainScreen from "./MainScreen";
 
-const supportedWallets = [
-  {adapter: new GlassWalletAdapter()},
-];
+function App() {
+  const adapters = useMemo(() => [new WalletStandardAdapterProvider()], []);
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <WalletProvider supportedWallets={supportedWallets}>
-      <App/>
-    </WalletProvider>
-  </React.StrictMode>
-);
+  return (
+    <div className="App">
+      <header className="App-header">
+        <WalletProvider adapters={adapters}>
+          <MainScreen />
+        </WalletProvider>
+      </header>
+    </div>
+  );
+}
+
+export default App;
 ```
 <br/>
+
+#### With GlassWalletAdapter
+```jsx
+// App.js
+import "./App.css";
+import { useMemo } from "react";
+import {
+  Wallet,
+  WalletAdapter,
+  WalletProvider,
+} from "@mysten/wallet-adapter-react";
+import MainScreen from "./MainScreen";
+import { GlassWalletAdapter } from "@glass-wallet/glass-wallet-adapter";
+
+const glassAdapter = new GlassWalletAdapter();
+
+function App() {
+  const adapters = useMemo(() => {
+    return [
+      {
+        adapter: glassAdapter,
+      } as Wallet,
+    ];
+  }, []);
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        <WalletProvider supportedWallets={adapters}>
+          <MainScreen />
+        </WalletProvider>
+      </header>
+    </div>
+  );
+}
+
+export default App;
+
+```
+<br/>
+
 
 #### @Reference: [MystenLabs/sui](https://github.com/MystenLabs/sui/tree/main/sdk/wallet-adapter/packages/adapters/sui-wallet)
