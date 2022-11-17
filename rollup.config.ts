@@ -8,35 +8,30 @@ import { terser } from 'rollup-plugin-terser';
 import * as path from 'path';
 
 const config = defineConfig({
-  input: 'src/index.ts',
+  input: "src/index.ts",
   output: [
     {
-      file: 'dist/index.js',
-      format: 'es',
+      file: "dist/index.js",
+      format: "cjs",
       plugins: [
-        // compile js to es5 compatible, friendly to browsers
         getBabelOutputPlugin({
-          filename: 'dist/index.js',
-          configFile: path.resolve(__dirname, 'babel.config.js'),
-        })
-      ]
+          filename: "dist/index.js",
+          configFile: path.resolve(__dirname, "babel.config.js"),
+        }),
+      ],
     },
     {
-      file: 'dist/index.cjs',
-      format: 'cjs',
+      file: "dist/index.esm.js",
+      format: "esm",
     },
   ],
-  external: ['@mysten/sui.js'],
+  external: ["@mysten/sui.js"],
   plugins: [
-    // compile ts files
-    typescript(),
-    // polyfill nodejs built-in and global modules
+    typescript({ target: "es5" }),
     nodePolyfills(),
-    // fetch node_modules contents
     resolvePlugin({
       browser: true, // specify that it's built for browser
     }),
-    // convert commonjs module to es module for rollup to bundle
     cjs2es(),
   ],
 });

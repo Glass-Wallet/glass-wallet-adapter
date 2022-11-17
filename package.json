@@ -1,16 +1,16 @@
 {
   "name": "@glass-wallet/glass-wallet-adapter",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Integration of Glass Wallet Wallet into the Sui Wallet Adapter",
   "license": "MIT",
   "author": "Mikenervermind <mike@glasswallet.app>",
-  "main": "src/index.cjs",
-  "module": "dist/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
   "browser": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "assets"
+    "src"
   ],
   "scripts": {
     "dev": "rollup -c rollup.config.ts --watch",
@@ -18,7 +18,7 @@
     "clean": "rimraf dist/"
   },
   "dependencies": {
-    "@mysten/sui.js": "0.11.0",
+    "@mysten/sui.js": "0.15.0",
     "@mysten/wallet-adapter-base": "0.1.0",
     "@wallet-standard/features": "0.1.0-alpha.0",
     "borsh": "^0.7.0",

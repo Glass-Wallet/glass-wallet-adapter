@@ -3,7 +3,7 @@ export declare class GlassWalletAdapter {
     connecting: boolean;
     connected: boolean;
     name: string;
-    icon: `data:image/png;base64,${string}`;
+    icon: string;
     getAccounts(): Promise<string[]>;
     signAndExecuteTransaction(transaction: SignableTransaction): Promise<SuiTransactionResponse>;
     executeMoveCall(transaction: MoveCallTransaction): Promise<SuiTransactionResponse>;

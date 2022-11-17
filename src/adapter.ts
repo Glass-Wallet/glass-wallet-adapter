@@ -1,12 +1,10 @@
-// Copyright (c) Mysten Labs, Inc.
-// SPDX-License-Identifier: Apache-2.0
-
 import {
   MoveCallTransaction,
+  SignableTransaction,
   SuiAddress,
   SuiTransactionResponse,
 } from "@mysten/sui.js";
-import { WalletAdapter } from "@mysten/wallet-adapter-base";
+import { GlassIcon } from "./GlassIcon";
 
 const ALL_PERMISSION_TYPES = ["viewAccount", "suggestTransactions"] as const;
 type AllPermissionsType = typeof ALL_PERMISSION_TYPES;
@@ -16,15 +14,15 @@ interface GlassWallet {
   hasPermissions(permissions: readonly PermissionType[]): Promise<boolean>;
   requestPermissions(): Promise<boolean>;
   getAccounts(): Promise<SuiAddress[]>;
-  executeMoveCall: (
+  executeMoveCall(
     transaction: MoveCallTransaction
-  ) => Promise<SuiTransactionResponse>;
-  executeSerializedMoveCall: (
-    transactionBytes: Uint8Array
-  ) => Promise<SuiTransactionResponse>;
-  signAndExecuteTransaction: (
-    transaction: any
-  ) => Promise<SuiTransactionResponse>;
+  ): Promise<SuiTransactionResponse>;
+  executeSerializedMoveCall(
+    transactionBytes: string | Uint8Array
+  ): Promise<SuiTransactionResponse>;
+  signAndExecuteTransaction(
+    transaction: SignableTransaction
+  ): Promise<SuiTransactionResponse>;
 }
 
 interface GlassWalletWindow {
@@ -33,50 +31,51 @@ interface GlassWalletWindow {
 
 declare const window: GlassWalletWindow;
 
-/**
- * @deprecated This wallet adapter has been replaced by the `WalletStandardAdapterProvider`.
- */
-export class GlassWalletAdapter implements WalletAdapter {
+export class GlassWalletAdapter {
   connecting: boolean;
   connected: boolean;
+  name = "Glass Wallet";
+  icon = GlassIcon;
 
   getAccounts(): Promise<string[]> {
     return window.glassWallet.getAccounts();
   }
+
+  signAndExecuteTransaction(
+    transaction: SignableTransaction
+  ): Promise<SuiTransactionResponse> {
+    return window.glassWallet.signAndExecuteTransaction(transaction);
+  }
+
   executeMoveCall(
     transaction: MoveCallTransaction
   ): Promise<SuiTransactionResponse> {
     return window.glassWallet.executeMoveCall(transaction);
   }
   executeSerializedMoveCall(
-    transactionBytes: Uint8Array
+    transactionBytes: string | Uint8Array
   ): Promise<SuiTransactionResponse> {
     return window.glassWallet.executeSerializedMoveCall(transactionBytes);
   }
-  signAndExecuteTransaction(transaction: any): Promise<SuiTransactionResponse> {
-    return window.glassWallet.signAndExecuteTransaction(transaction);
-  }
-
-  name = "Glass Wallet";
 
   async connect(): Promise<void> {
     this.connecting = true;
     if (window.glassWallet) {
       const wallet = window.glassWallet;
       try {
-        let given = await wallet.requestPermissions();
+        await wallet.requestPermissions();
         const newLocal: readonly PermissionType[] = ALL_PERMISSION_TYPES;
-        let perms = await wallet.hasPermissions(newLocal);
+        await wallet.hasPermissions(newLocal);
         this.connected = true;
       } catch (err) {
         console.error(err);
       } finally {
         this.connecting = false;
       }
+    } else {
     }
   }
 
-  // Come back to this later
   async disconnect(): Promise<void> {
     if (this.connected == true) {
       this.connected = false;
