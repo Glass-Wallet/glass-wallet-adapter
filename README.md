@@ -1,5 +1,5 @@
 <a href="https://glasswallet.app"><p align="center">
-<img width="480" src="./assets/logo.svg"/>
+<img width="480" src="https://bafybeihddf4cxc4h33npwbm2ovllcjformron75ioogoqagwien6ithsba.ipfs.w3s.link/logo2.svg"/>
 </a>
 
 # Glass Wallet Adapter
@@ -7,7 +7,9 @@
 ## Integrate your DApp with Glass Wallet.
 
 With this adapter, your DApp can easily connect with the Glass Wallet.
-Demo: https://glass-wallet-integrate-demo.vercel.app/
+Demo: [demo](https://glass-wallet-integrate-demo.vercel.app/)
+Integrate with Glass Adapter: [github](https://github.com/Glass-Wallet/glass-wallet-adapter/tree/main/tutorial-integrate-with-glass)
+Integrate with WalletStandardAdapterProvider: [github](https://github.com/Glass-Wallet/glass-wallet-adapter/tree/main/tutorial-wallet-standard)
 
 ## 🚀 Get Started
 ### Installation
